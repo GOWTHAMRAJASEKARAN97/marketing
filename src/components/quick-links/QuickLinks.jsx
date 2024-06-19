@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, MenuItem, Select, styled, useMediaQuery } from "@mui/material";
 import { QUICKLINKS } from "../../utils/constants/quickLinks";
 import newGif from "../../assets/gifs/newAni.gif";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -10,15 +10,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  // flexWrap: "wrap",
   padding: ".5rem",
-  //   padding: theme.spacing(2), // Increased padding for better spacing
-  //   [theme.breakpoints.up("sm")]: {
-  //     minHeight: 64, // Changed to minHeight for better height control
-  //   },
   [theme.breakpoints.down("sm")]: {
     fontSize: ".5rem",
-    // flexDirection: "column",
+    justifyContent: "space-around",
   },
 }));
 
@@ -29,13 +24,7 @@ const StyledLink = styled("a")(({ theme }) => ({
   margin: theme.spacing(0, 1),
   display: "flex",
   alignItems: "center",
-  position: "relative", // Position relative for absolute positioning of social icons
-  //   [theme.breakpoints.up("sm")]: {
-  //     lineHeight: "64px",
-  //   },
-  //   [theme.breakpoints.down("sm")]: {
-  //     lineHeight: "56px",
-  //   },
+  position: "relative",
   "&:not(:last-child)::after": {
     content: '"|"',
     marginLeft: theme.spacing(1),
@@ -50,15 +39,15 @@ const NewIndicator = styled("span")(({ theme }) => ({
   width: 20,
   height: 20,
   background: `url(${newGif}) no-repeat center center`,
-  backgroundSize: "cover", // Changed to cover for better image display
+  backgroundSize: "cover",
 }));
 
 const SocialIconsContainer = styled("div")({
-  marginLeft: "auto", // Push social icons to the right
+  marginLeft: "auto",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  height: "100%", // Match the height of StyledLink
+  height: "100%",
 });
 
 const SocialIcon = styled("div")(({ theme }) => ({
@@ -67,21 +56,70 @@ const SocialIcon = styled("div")(({ theme }) => ({
   color: theme.palette.customColors.background,
   [theme.breakpoints.down("sm")]: {
     "& svg": {
-      width: ".5rem",
-      height: ".5rem",
+      // width: ".5rem",
+      // height: ".5rem",
     },
   },
 }));
+const StyledSelect = styled(Select)(({ theme }) => ({
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: theme.palette.customColors.background,
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: theme.palette.customColors.background,
+  },
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: theme.palette.customColors.background,
+  },
+  "& svg": {
+    color: theme.palette.customColors.background,
+  },
+  height: "1.5rem",
+  fontSize: ".75rem",
+}));
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  height: "1.5rem",
+  fontSize: ".75rem",
+}));
 
 const QuickLinks = () => {
+  const matches = useMediaQuery("(max-width:600px)");
+
   return (
     <StyledContainer>
-      {QUICKLINKS.map(({ name, link, latest }, index) => (
-        <StyledLink href={link} key={index} aria-label={name}>
-          {name}
-          {latest && <NewIndicator />}
-        </StyledLink>
-      ))}
+      {!matches ? (
+        QUICKLINKS.map(({ name, link, latest }, index) => (
+          <StyledLink href={link} key={index} aria-label={name}>
+            {name}
+            {latest && <NewIndicator />}
+          </StyledLink>
+        ))
+      ) : (
+        <StyledSelect
+          size="small"
+          displayEmpty
+          defaultValue="Quick Links"
+          sx={{ minWidth: "5rem", color: "white", borderColor: "white" }}
+        >
+          <MenuItem value="Quick Links" disabled sx={{ display: "none" }}>
+            Quick Links
+          </MenuItem>
+          {QUICKLINKS.map(({ name, link, latest }, index) => (
+            <StyledMenuItem
+              value={link}
+              key={index}
+              aria-label={name}
+              component="a"
+              href={link}
+            >
+              <Box display="flex" alignItems="center">
+                {name}
+                {latest && <NewIndicator />}
+              </Box>
+            </StyledMenuItem>
+          ))}
+        </StyledSelect>
+      )}
       <SocialIconsContainer>
         <SocialIcon>
           <FacebookIcon />

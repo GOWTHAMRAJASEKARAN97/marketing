@@ -18,11 +18,15 @@ import "swiper/css/scrollbar";
 
 const StyledSwiper = styled(Swiper)(({ theme }) => ({
   height: "30rem",
-  ". swiper-button-next": {
+  ".swiper-button-next": {
+    color: theme.palette.customColors.background,
+  },
+
+  ".swiper-button-prev": {
     color: theme.palette.customColors.background,
   },
   [theme.breakpoints.down("sm")]: {
-    height: "max-content",
+    height: "9rem",
   },
 }));
 const StyledSwiperSlide = styled(SwiperSlide)(({ theme }) => ({

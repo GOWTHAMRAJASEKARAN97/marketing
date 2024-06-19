@@ -8,7 +8,7 @@ import logo from "../../assets/images/nitttr_chennai_logo.png";
 import g20 from "../../assets/images/G20_India_2023_logo.svg.png";
 import { Link } from "react-router-dom"; // Assuming you are using React Router
 import { ROUTES } from "../../utils/constants/routes";
-import { Box } from "@mui/material";
+import { Box, MenuItem, Select, useMediaQuery } from "@mui/material";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.customColors.background,
@@ -93,8 +93,29 @@ const StyledDropDownContainer = styled(Box)(({ theme }) => ({
     gap: ".5rem",
   },
 }));
-
+const StyledSelect = styled(Select)(({ theme }) => ({
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: theme.palette.customColors.text,
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: theme.palette.customColors.text,
+  },
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: theme.palette.customColors.text,
+  },
+  "& svg": {
+    color: theme.palette.customColors.text,
+  },
+  color: theme.palette.customColors.text,
+  height: "1.5rem",
+  fontSize: ".75rem",
+}));
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  height: "1.5rem",
+  fontSize: ".75rem",
+}));
 const Header = (props) => {
+  const matches = useMediaQuery("(max-width:600px)");
   return (
     <React.Fragment>
       <HideOnScroll {...props}>
@@ -108,11 +129,45 @@ const Header = (props) => {
             </G20Container>
           </StyledToolbar>
           <StyledDropDownContainer>
-            {ROUTES.map(({ name, link }, index) => (
-              <StyledLink key={index} to={link} style={{ marginRight: 20 }}>
-                {name}
-              </StyledLink>
-            ))}
+            {!matches ? (
+              ROUTES.map(({ name, link }, index) => (
+                <StyledLink key={index} to={link} style={{ marginRight: 20 }}>
+                  {name}
+                </StyledLink>
+              ))
+            ) : (
+              <StyledSelect
+                size="small"
+                displayEmpty
+                defaultValue="Quick Routes"
+                sx={{ minWidth: "5rem" }}
+              >
+                <MenuItem
+                  value="Quick Routes"
+                  disabled
+                  sx={{ display: "none" }}
+                >
+                  Quick Routes
+                </MenuItem>
+                {ROUTES.map(({ name, link }, index) => (
+                  <StyledMenuItem
+                    value={link}
+                    key={index}
+                    aria-label={name}
+                    component="a"
+                    href={link}
+                  >
+                    <StyledLink
+                      key={index}
+                      to={link}
+                      style={{ marginRight: 20 }}
+                    >
+                      {name}
+                    </StyledLink>
+                  </StyledMenuItem>
+                ))}
+              </StyledSelect>
+            )}
           </StyledDropDownContainer>
         </StyledAppBar>
       </HideOnScroll>
