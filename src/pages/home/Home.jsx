@@ -1,14 +1,14 @@
 import React from "react";
 import Carousel from "../../components/carousel/Carousel";
 import FlashNews from "../../components/flash-news/FlashNews";
-import News from "../../components/news/News";
+import NewsCarousel from "../../components/news/NewsCarousel";
 
 const Home = () => {
   return (
     <>
       <Carousel />
       <FlashNews />
-      <News />
+      <NewsCarousel />
     </>
   );
 };
