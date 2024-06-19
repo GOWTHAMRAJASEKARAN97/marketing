@@ -10,6 +10,8 @@ import "swiper/css/scrollbar";
 
 import { NEWS } from "../../utils/constants/news";
 import {
+  Box,
+  Button,
   Card,
   CardContent,
   CardMedia,
@@ -36,7 +38,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
-    maxWidth: "230px",
+    maxWidth: "250px",
     height: "100%",
     maxHeight: "350px",
   },
@@ -56,6 +58,9 @@ const StyledCardContent = styled(CardContent)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
+  maxHeight: "150px",
+  overflow: "scroll",
+  overflowX: "hidden",
 });
 
 const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
@@ -63,7 +68,7 @@ const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
   borderRadius: "12px 12px 0 0",
   objectFit: "cover",
   [theme.breakpoints.up("xs")]: {
-    // height: "250px",
+    height: "200px",
   },
 }));
 
@@ -71,18 +76,22 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
   fontSize: "1.25rem",
   margin: "0.5rem 0",
   fontWeight: "bold",
-  [theme.breakpoints.up("xs")]: {
+  [theme.breakpoints.down("sm")]: {
     // fontSize: ".75rem",
+    // marginTop: "0.10rem",
   },
 }));
 
-const StyledSubtitle = styled(Typography)({
+const StyledSubtitle = styled(Typography)(({ theme }) => ({
   fontSize: "1rem",
   lineHeight: "1.4",
   marginBottom: "0.5rem",
   color: "gray",
-});
-
+  [theme.breakpoints.down("sm")]: {
+    // fontSize: ".75rem",
+    // margin: 0,
+  },
+}));
 const StyledLink = styled("a")(({ theme }) => ({
   color: theme.palette.secondary.main,
   textDecoration: "none",
@@ -166,8 +175,6 @@ const NewsCarousel = () => {
                 <StyledSubtitle variant="subtitle1">
                   {subheading}
                 </StyledSubtitle>
-              </StyledCardContent>
-              <CardContent>
                 {links.map(({ name, link }, idx) => (
                   <StyledList key={idx}>
                     <StyledLink
@@ -179,7 +186,22 @@ const NewsCarousel = () => {
                     </StyledLink>
                   </StyledList>
                 ))}
-              </CardContent>
+              </StyledCardContent>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <Button
+                  sx={{ textTransform: "none" }}
+                  endIcon={<OpenInNewIcon fontSize="small" />}
+                >
+                  Learn More
+                </Button>
+              </Box>
             </StyledCard>
           </StyledSwiperSlide>
         ))}
