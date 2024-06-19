@@ -36,7 +36,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
-    maxWidth: "250px",
+    maxWidth: "230px",
     height: "100%",
     maxHeight: "350px",
   },

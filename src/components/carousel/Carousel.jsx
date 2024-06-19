@@ -18,6 +18,7 @@ import "swiper/css/scrollbar";
 
 const StyledSwiper = styled(Swiper)(({ theme }) => ({
   height: "30rem",
+  padding: ".5rem",
   ".swiper-button-next": {
     color: theme.palette.customColors.background,
   },
@@ -27,9 +28,12 @@ const StyledSwiper = styled(Swiper)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     height: "9rem",
+    padding: ".25rem",
   },
 }));
 const StyledSwiperSlide = styled(SwiperSlide)(({ theme }) => ({
+  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+  border: "1px solid white",
   "& img": {
     width: "100%",
     height: "100%",
@@ -50,8 +54,8 @@ const Carousel = () => {
       modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
       spaceBetween={30} // Adjust spacing between slides
       slidesPerView={1} // Number of slides visible at once
-      autoplay={{ delay: 2000 }}
-      navigation
+      autoplay={{ delay: 5000 }}
+      // navigation
       pagination={{ clickable: true }} // Enable clickable pagination bullets
       // scrollbar={{ draggable: true }} // Enable scrollbar with draggable thumb
       onSwiper={(swiper) => console.log(swiper)}
