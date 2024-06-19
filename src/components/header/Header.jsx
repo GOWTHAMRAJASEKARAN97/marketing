@@ -7,7 +7,7 @@ import { styled } from "@mui/material/styles";
 import logo from "../../assets/images/nitttr_chennai_logo.png";
 import g20 from "../../assets/images/G20_India_2023_logo.svg.png";
 import { Link } from "react-router-dom"; // Assuming you are using React Router
-import { ROUTES } from "../../utils/routes";
+import { ROUTES } from "../../utils/constants/routes";
 import { Box } from "@mui/material";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({

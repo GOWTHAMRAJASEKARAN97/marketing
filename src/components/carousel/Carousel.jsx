@@ -1,3 +1,8 @@
+import { styled } from "@mui/material";
+import image1 from "../../assets/carousel-images/banner1.jpg";
+import image2 from "../../assets/carousel-images/banner3.jpg";
+import image3 from "../../assets/carousel-images/banner4.jpg";
+
 import {
   Navigation,
   Pagination,
@@ -5,13 +10,7 @@ import {
   A11y,
   Autoplay,
 } from "swiper/modules";
-import { styled } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
-import image1 from "../../assets/carousel-images/banner1.jpg";
-import image2 from "../../assets/carousel-images/banner3.jpg";
-import image3 from "../../assets/carousel-images/banner4.jpg";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
