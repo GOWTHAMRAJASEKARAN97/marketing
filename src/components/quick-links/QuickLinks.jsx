@@ -10,16 +10,16 @@ const StyledContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  flexWrap: "wrap",
+  // flexWrap: "wrap",
   padding: ".5rem",
   //   padding: theme.spacing(2), // Increased padding for better spacing
   //   [theme.breakpoints.up("sm")]: {
   //     minHeight: 64, // Changed to minHeight for better height control
   //   },
-  //   [theme.breakpoints.down("sm")]: {
-  //     minHeight: "auto", // Allow height to adjust for smaller screens
-  //     padding: theme.spacing(1),
-  //   },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: ".5rem",
+    // flexDirection: "column",
+  },
 }));
 
 const StyledLink = styled("a")(({ theme }) => ({
@@ -57,6 +57,7 @@ const SocialIconsContainer = styled("div")({
   marginLeft: "auto", // Push social icons to the right
   display: "flex",
   alignItems: "center",
+  justifyContent: "center",
   height: "100%", // Match the height of StyledLink
 });
 
@@ -64,6 +65,12 @@ const SocialIcon = styled("div")(({ theme }) => ({
   marginLeft: theme.spacing(1),
   cursor: "pointer",
   color: theme.palette.customColors.background,
+  [theme.breakpoints.down("sm")]: {
+    "& svg": {
+      width: ".5rem",
+      height: ".5rem",
+    },
+  },
 }));
 
 const QuickLinks = () => {

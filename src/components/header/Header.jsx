@@ -27,8 +27,12 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   minHeight: 56,
   padding: ".5rem",
+  display: "flex",
   [theme.breakpoints.up("sm")]: {
     minHeight: 64,
+  },
+  [theme.breakpoints.up("xs")]: {
+    // flexDirection: "column",
   },
 }));
 
@@ -54,6 +58,10 @@ const LogoImage = styled("img")(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
     maxHeight: 75,
   },
+  [theme.breakpoints.down("sm")]: {
+    maxHeight: 60,
+    maxWidth: 200,
+  },
 }));
 
 const G20Image = styled("img")(({ theme }) => ({
@@ -62,18 +70,28 @@ const G20Image = styled("img")(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
     maxHeight: 75,
   },
+  [theme.breakpoints.down("sm")]: {
+    maxHeight: 60,
+    maxWidth: 150,
+  },
 }));
 const StyledLink = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main,
   textDecoration: "none",
   textTransform: "uppercase",
 }));
+
 const StyledDropDownContainer = styled(Box)(({ theme }) => ({
   padding: ".5rem",
   justifyContent: "center",
   alignItems: "center",
   display: "flex",
+  flexWrap: "wrap",
   fontSize: 15,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 10,
+    gap: ".5rem",
+  },
 }));
 
 const Header = (props) => {

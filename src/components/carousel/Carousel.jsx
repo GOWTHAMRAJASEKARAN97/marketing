@@ -21,12 +21,22 @@ const StyledSwiper = styled(Swiper)(({ theme }) => ({
   ". swiper-button-next": {
     color: theme.palette.customColors.background,
   },
+  [theme.breakpoints.down("sm")]: {
+    height: "max-content",
+  },
 }));
 const StyledSwiperSlide = styled(SwiperSlide)(({ theme }) => ({
   "& img": {
     width: "100%",
     height: "100%",
     objectFit: "cover", // Ensure the image covers the slide
+  },
+  [theme.breakpoints.down("xs")]: {
+    "& img": {
+      width: "100%",
+      height: "100%",
+      objectFit: "contain", // Ensure the image covers the slide
+    },
   },
 }));
 

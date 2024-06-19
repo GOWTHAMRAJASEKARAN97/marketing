@@ -9,7 +9,13 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 import { NEWS } from "../../utils/constants/news";
-import { Card, CardContent, CardMedia, styled, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  styled,
+  Typography,
+} from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 
@@ -27,6 +33,12 @@ const StyledCard = styled(Card)(({ theme }) => ({
   transition: "transform 0.2s ease-in-out",
   "&:hover": {
     transform: "translateY(-5px)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    maxWidth: "250px",
+    height: "100%",
+    maxHeight: "350px",
   },
 }));
 
@@ -46,17 +58,23 @@ const StyledCardContent = styled(CardContent)({
   justifyContent: "space-between",
 });
 
-const StyledCardMedia = styled(CardMedia)({
+const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
   height: "200px",
   borderRadius: "12px 12px 0 0",
   objectFit: "cover",
-});
+  [theme.breakpoints.up("xs")]: {
+    // height: "250px",
+  },
+}));
 
-const StyledTitle = styled(Typography)({
+const StyledTitle = styled(Typography)(({ theme }) => ({
   fontSize: "1.25rem",
   margin: "0.5rem 0",
   fontWeight: "bold",
-});
+  [theme.breakpoints.up("xs")]: {
+    // fontSize: ".75rem",
+  },
+}));
 
 const StyledSubtitle = styled(Typography)({
   fontSize: "1rem",
@@ -111,8 +129,8 @@ const NewsCarousel = () => {
       </StyledHeader>
       <StyledSwiper
         modules={[Navigation, Pagination, Scrollbar, A11y]}
-        spaceBetween={20}
-        slidesPerView={4}
+        spaceBetween={50}
+        slidesPerView={1}
         breakpoints={{
           640: {
             slidesPerView: 1,
@@ -145,7 +163,9 @@ const NewsCarousel = () => {
               <StyledCardMedia image={image} title={heading} />
               <StyledCardContent>
                 <StyledTitle variant="h2">{heading}</StyledTitle>
-                <StyledSubtitle variant="subtitle1">{subheading}</StyledSubtitle>
+                <StyledSubtitle variant="subtitle1">
+                  {subheading}
+                </StyledSubtitle>
               </StyledCardContent>
               <CardContent>
                 {links.map(({ name, link }, idx) => (
