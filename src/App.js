@@ -5,14 +5,16 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./themes/Theme";
-import QuickLinks from "./components/quick-links/QuickLinks";
+import FlashNews from "./components/flash-news/FlashNews";
+// import QuickLinks from "./components/quick-links/QuickLinks";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <ThemeProvider theme={theme}>
-          <QuickLinks />
+          {/* <QuickLinks /> */}
+          <FlashNews />
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
