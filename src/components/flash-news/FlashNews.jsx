@@ -11,13 +11,13 @@ const MarqueeContainer = styled("div")(({ theme }) => ({
   overflow: "hidden",
   whiteSpace: "nowrap",
   position: "relative",
-  padding: ".5rem",
+  // padding: ".5rem",
   display: "flex",
   alignItems: "center",
   // justifyContent: "space-between",
   "& > div": {
     // display: "inline-block",
-    padding: "0 1rem", // Adjust padding as needed
+    // padding: "0 1rem", // Adjust padding as needed
     // width: "100%",
   },
   "& > div > marquee": {
