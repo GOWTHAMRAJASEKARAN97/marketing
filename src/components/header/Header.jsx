@@ -7,13 +7,16 @@ import g20 from "../../assets/images/G20_India_2023_logo.svg.png";
 import {
   Box,
   Button,
-  MenuItem,
   Popper,
   Paper,
   Grow,
   Backdrop,
-  // useMediaQuery,
+  List,
+  ListItem,
+  ListItemText,
+  Collapse,
 } from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { LINK_BUTTONS } from "../../utils/constants/header";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -34,7 +37,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: ".5rem",
   minHeight: 56,
   display: "flex",
-  justifyContent: "space-between", // Ensures items are spread out evenly
+  justifyContent: "space-between",
   [theme.breakpoints.up("sm")]: {
     minHeight: 64,
   },
@@ -44,7 +47,7 @@ const LogoContainer = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   flex: 1,
-  height: "100%", // Ensure it takes full height of AppBar
+  height: "100%",
 }));
 
 const G20Container = styled("div")(({ theme }) => ({
@@ -52,11 +55,11 @@ const G20Container = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   flex: 1,
-  height: "100%", // Ensure it takes full height of AppBar
+  height: "100%",
 }));
 
 const LogoImage = styled("img")(({ theme }) => ({
-  maxHeight: 60, // Adjust max height as per your design
+  maxHeight: 60,
   width: "auto",
   float: "left",
   [theme.breakpoints.up("sm")]: {
@@ -69,7 +72,7 @@ const LogoImage = styled("img")(({ theme }) => ({
 }));
 
 const G20Image = styled("img")(({ theme }) => ({
-  maxHeight: 60, // Adjust max height as per your design
+  maxHeight: 60,
   width: "auto",
   [theme.breakpoints.up("sm")]: {
     maxHeight: 75,
@@ -87,13 +90,18 @@ const StyledButtonContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   gap: "1rem",
   fontSize: 15,
-  flexWrap: "nowrap", // Prevents buttons from wrapping to the next line
-  overflow: "hidden", // Ensures buttons stay within the container
-  width: "100%", // Ensures container takes full width
+  flexWrap: "nowrap",
+  overflow: "hidden",
+  width: "100%",
 }));
 
 const StyledPopper = styled(Popper)(({ theme }) => ({
   zIndex: "9999",
+  '&[data-popper-placement*="right"] .popper-arrow': {
+    left: "-10px",
+    top: "calc(50% - 10px)",
+    transform: "rotate(90deg)",
+  },
 }));
 
 const PopperArrow = styled("div")(({ theme }) => ({
@@ -105,11 +113,19 @@ const PopperArrow = styled("div")(({ theme }) => ({
   borderBottom: `10px solid ${theme.palette.customColors.background}`,
   top: -10,
   left: "calc(50% - 10px)",
+  "&.right": {
+    borderBottom: "none",
+    borderLeft: `10px solid ${theme.palette.customColors.background}`,
+    top: "calc(50% - 10px)",
+    left: -10,
+  },
 }));
 
 const Header = () => {
   const [menuOptions, setMenuOptions] = useState([]);
+
   const [anchorEl, setAnchorEl] = useState(null);
+
   const popperRef = useRef(null);
 
   const handleMenuOpen = (event, options) => {
@@ -136,9 +152,42 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+    /*eslint-disable-next-line */
   }, [anchorEl]);
 
   const open = Boolean(anchorEl);
+
+  const NestedListItem = ({ name, options }) => {
+    const [openNestedList, setOpenNestedList] = useState(false);
+
+    const handleClickNestList = () => {
+      setOpenNestedList(!openNestedList);
+    };
+
+    return (
+      <>
+        <ListItem button onClick={handleClickNestList}>
+          <ListItemText primary={name} sx={{ textTransform: "capitalize" }} />
+          {options ? openNestedList ? <ExpandLess /> : <ExpandMore /> : null}
+        </ListItem>
+        {options && (
+          <Collapse in={openNestedList} timeout="auto" unmountOnExit>
+            <List
+              component="div"
+              // disablePadding
+              style={{
+                paddingLeft: 32 /* Adjust the paddingLeft as needed */,
+              }}
+            >
+              {options.map((option, index) => (
+                <NestedListItem key={index} {...option} />
+              ))}
+            </List>
+          </Collapse>
+        )}
+      </>
+    );
+  };
 
   return (
     <React.Fragment>
@@ -155,7 +204,9 @@ const Header = () => {
           {LINK_BUTTONS.map(({ name, options }, index) => (
             <Button
               key={index}
-              onClick={(event) => handleMenuOpen(event, options)}
+              onClick={(event) =>
+                options?.length && handleMenuOpen(event, options)
+              }
               sx={{ textTransform: "capitalize", color: "white" }}
             >
               {name}
@@ -168,20 +219,19 @@ const Header = () => {
         sx={{ zIndex: 9998, color: "#fff" }}
         onClick={handleMenuClose}
       />
+
       <StyledPopper anchorEl={anchorEl} open={open} transition ref={popperRef}>
         {({ TransitionProps }) => (
           <Grow {...TransitionProps}>
             <Paper>
-              <PopperArrow />
-              {menuOptions.map((option, index) => (
-                <MenuItem
-                  key={index}
-                  onClick={handleMenuClose}
-                  sx={{ textTransform: "capitalize" }}
-                >
-                  {option.name}
-                </MenuItem>
-              ))}
+              <PopperArrow className="popper-arrow" />
+              <Box sx={{ width: 250, maxHeight: "500px", overflowY: "auto" }}>
+                <List>
+                  {menuOptions.map((option, index) => (
+                    <NestedListItem key={index} {...option} />
+                  ))}
+                </List>
+              </Box>
             </Paper>
           </Grow>
         )}

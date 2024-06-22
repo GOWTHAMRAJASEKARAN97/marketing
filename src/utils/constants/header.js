@@ -1,15 +1,15 @@
 export const LINK_BUTTONS = [
-  // { name: "HOME", options: [] },
+  { name: "Home", options: [] },
   {
     name: "institute",
     options: [
       { name: "about us", link: "" },
       { name: "vision & mission", link: "" },
       { name: "BOG", link: "" },
-      { name: "memorendum of association", link: "" },
-      { name: "anual reports", link: "" },
-      { name: "news letters", link: "" },
       { name: "academic council", link: "" },
+      { name: "memorendum of association", link: "" },
+      { name: "annual reports", link: "" },
+      { name: "news letters", link: "" },
     ],
   },
   {
@@ -22,16 +22,80 @@ export const LINK_BUTTONS = [
       { name: "committees & incharges", link: "" },
       { name: "past directors & chairman", link: "" },
       { name: "administration form", link: "" },
-      { name: "anual property returns", link: "" },
+      { name: "annual property returns", link: "" },
     ],
   },
   {
     name: "academics",
     options: [
       { name: "overview", link: "" },
-      { name: "study @ NITTTR", link: "" },
-      { name: "faculty & departments", link: "" },
-      { name: "learning for all", link: "" },
+      {
+        name: "study @ NITTTR",
+        options: [
+          { name: "practical mode", link: "" },
+          { name: "online learning", link: "" },
+          { name: "integrated teacher education program", link: "" },
+          { name: "PG certificate", link: "" },
+          { name: "research program", link: "" },
+        ],
+      },
+      {
+        name: "faculty & departments",
+        options: [
+          {
+            name: "Faculty of Engineering and Technology",
+            options: [
+              { name: "Department of Civil Engineering", link: "" },
+              {
+                name: "Department of Computer Science and Engineering",
+                link: "",
+              },
+              {
+                name: "Department of Educational Media and Technology",
+                link: "",
+              },
+              {
+                name: "Department of Electrical and Electronics Engineering",
+                link: "",
+              },
+              {
+                name: "Department of Electronics and Communication Engineering",
+                link: "",
+              },
+              { name: "Department of Mechanical Engineering", link: "" },
+            ],
+          },
+          {
+            name: "Faculty of Education",
+            options: [
+              { name: "Department of Education", link: "" },
+              { name: "Department of Curriculum Development", link: "" },
+            ],
+          },
+          {
+            name: "Faculty of Management",
+            options: [
+              {
+                name: "Department of Rural and Entrepreneurship Development",
+                link: "",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: "learning for all",
+        options: [
+          {
+            name: "swayam",
+            link: "",
+          },
+          {
+            name: "NITTT modules",
+            link: "",
+          },
+        ],
+      },
       { name: "professional development program", link: "" },
       { name: "international training program", link: "" },
     ],
@@ -41,6 +105,7 @@ export const LINK_BUTTONS = [
     options: [
       { name: "academic studies & research", link: "" },
       { name: "international affairs", link: "" },
+      { name: "Rural and Entrepreneurship", link: "" },
       { name: "resource center", link: "" },
     ],
   },
@@ -67,5 +132,9 @@ export const LINK_BUTTONS = [
       { name: "brouchers", link: "" },
       { name: "news letters", link: "" },
     ],
+  },
+  {
+    name: "contact us",
+    options: [],
   },
 ];
