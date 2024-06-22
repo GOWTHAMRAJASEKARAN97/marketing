@@ -175,7 +175,7 @@ const NewsCarousel = () => {
                 <StyledSubtitle variant="subtitle1">
                   {subheading}
                 </StyledSubtitle>
-                {links.map(({ name, link }, idx) => (
+                {/* {links.map(({ name, link }, idx) => (
                   <StyledList key={idx}>
                     <StyledLink
                       href={link}
@@ -185,7 +185,7 @@ const NewsCarousel = () => {
                       {name} <OpenInNewIcon fontSize="small" />
                     </StyledLink>
                   </StyledList>
-                ))}
+                ))} */}
               </StyledCardContent>
               <Box
                 sx={{

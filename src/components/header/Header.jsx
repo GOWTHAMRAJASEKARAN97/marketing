@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
-import Slide from "@mui/material/Slide";
 import { styled } from "@mui/material/styles";
 import logo from "../../assets/images/nitttr_chennai_logo.png";
 import g20 from "../../assets/images/G20_India_2023_logo.svg.png";
-import { Link } from "react-router-dom"; // Assuming you are using React Router
-import { ROUTES } from "../../utils/constants/routes";
-import { Box, MenuItem, Select, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Popper,
+  Paper,
+  Grow,
+  Backdrop,
+  // useMediaQuery,
+} from "@mui/material";
+import { LINK_BUTTONS } from "../../utils/constants/header";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.customColors.background,
   color: theme.palette.customColors.text,
   position: "relative",
   display: "flex",
-  // alignItems: "center",
+  width: "100%",
   [theme.breakpoints.up("sm")]: {
     minHeight: 90,
   },
@@ -26,13 +32,10 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   minHeight: 56,
-  padding: ".5rem",
   display: "flex",
+  justifyContent: "space-between", // Ensures items are spread out evenly
   [theme.breakpoints.up("sm")]: {
     minHeight: 64,
-  },
-  [theme.breakpoints.up("xs")]: {
-    // flexDirection: "column",
   },
 }));
 
@@ -75,115 +78,115 @@ const G20Image = styled("img")(({ theme }) => ({
     maxWidth: 150,
   },
 }));
-const StyledLink = styled(Link)(({ theme }) => ({
-  color: theme.palette.primary.main,
-  textDecoration: "none",
-  textTransform: "uppercase",
-}));
 
-const StyledDropDownContainer = styled(Box)(({ theme }) => ({
-  padding: ".5rem",
+const StyledButtonContainer = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
   justifyContent: "center",
   alignItems: "center",
   display: "flex",
-  flexWrap: "wrap",
+  gap: "1rem",
   fontSize: 15,
-  [theme.breakpoints.down("sm")]: {
-    fontSize: 10,
-    gap: ".5rem",
-  },
+  flexWrap: "nowrap", // Prevents buttons from wrapping to the next line
+  overflow: "hidden", // Ensures buttons stay within the container
+  width: "100%", // Ensures container takes full width
 }));
-const StyledSelect = styled(Select)(({ theme }) => ({
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: theme.palette.customColors.text,
-  },
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: theme.palette.customColors.text,
-  },
-  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: theme.palette.customColors.text,
-  },
-  "& svg": {
-    color: theme.palette.customColors.text,
-  },
-  color: theme.palette.customColors.text,
-  height: "1.5rem",
-  fontSize: ".75rem",
+
+const StyledPopper = styled(Popper)(({ theme }) => ({
+  zIndex: "9999",
 }));
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  height: "1.5rem",
-  fontSize: ".75rem",
+
+const PopperArrow = styled("div")(({ theme }) => ({
+  position: "absolute",
+  width: 0,
+  height: 0,
+  borderLeft: "10px solid transparent",
+  borderRight: "10px solid transparent",
+  borderBottom: `10px solid ${theme.palette.customColors.background}`,
+  top: -10,
+  left: "calc(50% - 10px)",
 }));
-const Header = (props) => {
-  const matches = useMediaQuery("(max-width:600px)");
+
+const Header = () => {
+  const [menuOptions, setMenuOptions] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const popperRef = useRef(null);
+
+  const handleMenuOpen = (event, options) => {
+    setMenuOptions(options || []);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleClickOutside = (event) => {
+    if (popperRef.current && !popperRef.current.contains(event.target)) {
+      handleMenuClose();
+    }
+  };
+
+  useEffect(() => {
+    if (anchorEl) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [anchorEl]);
+
+  const open = Boolean(anchorEl);
+
   return (
     <React.Fragment>
-      <HideOnScroll {...props}>
-        <StyledAppBar>
-          <StyledToolbar>
-            <LogoContainer>
-              <LogoImage src={logo} alt="NITTR-Chennai" />
-            </LogoContainer>
-            <G20Container>
-              <G20Image src={g20} alt="G20-Chennai" />
-            </G20Container>
-          </StyledToolbar>
-          <StyledDropDownContainer>
-            {!matches ? (
-              ROUTES.map(({ name, link }, index) => (
-                <StyledLink key={index} to={link} style={{ marginRight: 20 }}>
-                  {name}
-                </StyledLink>
-              ))
-            ) : (
-              <StyledSelect
-                size="small"
-                displayEmpty
-                defaultValue="Quick Routes"
-                sx={{ minWidth: "5rem" }}
-              >
+      <StyledAppBar>
+        <StyledToolbar>
+          <LogoContainer>
+            <LogoImage src={logo} alt="NITTR-Chennai" />
+          </LogoContainer>
+          <G20Container>
+            <G20Image src={g20} alt="G20-Chennai" />
+          </G20Container>
+        </StyledToolbar>
+        <StyledButtonContainer>
+          {LINK_BUTTONS.map(({ name, options }, index) => (
+            <Button
+              key={index}
+              onClick={(event) => handleMenuOpen(event, options)}
+              sx={{ textTransform: "capitalize", color: "white" }}
+            >
+              {name}
+            </Button>
+          ))}
+        </StyledButtonContainer>
+      </StyledAppBar>
+      <Backdrop
+        open={open}
+        sx={{ zIndex: 9998, color: "#fff" }}
+        onClick={handleMenuClose}
+      />
+      <StyledPopper anchorEl={anchorEl} open={open} transition ref={popperRef}>
+        {({ TransitionProps }) => (
+          <Grow {...TransitionProps}>
+            <Paper>
+              <PopperArrow />
+              {menuOptions.map((option, index) => (
                 <MenuItem
-                  value="Quick Routes"
-                  disabled
-                  sx={{ display: "none" }}
+                  key={index}
+                  onClick={handleMenuClose}
+                  sx={{ textTransform: "capitalize" }}
                 >
-                  Quick Routes
+                  {option.name}
                 </MenuItem>
-                {ROUTES.map(({ name, link }, index) => (
-                  <StyledMenuItem
-                    value={link}
-                    key={index}
-                    aria-label={name}
-                    component="a"
-                    href={link}
-                  >
-                    <StyledLink
-                      key={index}
-                      to={link}
-                      style={{ marginRight: 20 }}
-                    >
-                      {name}
-                    </StyledLink>
-                  </StyledMenuItem>
-                ))}
-              </StyledSelect>
-            )}
-          </StyledDropDownContainer>
-        </StyledAppBar>
-      </HideOnScroll>
+              ))}
+            </Paper>
+          </Grow>
+        )}
+      </StyledPopper>
     </React.Fragment>
   );
 };
-
-function HideOnScroll(props) {
-  const { children, window } = props;
-  const trigger = useScrollTrigger({ target: window ? window() : undefined });
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
 
 export default Header;
