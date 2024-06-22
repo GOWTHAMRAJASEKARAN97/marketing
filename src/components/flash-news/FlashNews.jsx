@@ -59,6 +59,18 @@ const FlashNews = () => {
 
   return (
     <MarqueeContainer>
+      <div
+        style={{
+          backgroundColor: "#70BCB8",
+          width: "max-content",
+          padding: ".5rem",
+          color: "black",
+          fontWeight: "bolder",
+          height: "100%",
+        }}
+      >
+        NITTTR NEWS
+      </div>
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         {/* eslint-disable-next-line */}
         <marquee ref={marqueeRef}>

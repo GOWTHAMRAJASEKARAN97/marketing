@@ -6,8 +6,8 @@ import NewsCarousel from "../../components/news/NewsCarousel";
 const Home = () => {
   return (
     <>
-      <Carousel />
       <FlashNews />
+      <Carousel />
       <NewsCarousel />
     </>
   );
