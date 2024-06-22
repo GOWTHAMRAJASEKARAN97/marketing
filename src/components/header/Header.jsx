@@ -31,6 +31,7 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 }));
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+  padding: ".5rem",
   minHeight: 56,
   display: "flex",
   justifyContent: "space-between", // Ensures items are spread out evenly
