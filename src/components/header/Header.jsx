@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { LINK_BUTTONS } from "../../utils/constants/header";
+import { useNavigate } from "react-router-dom";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.customColors.background,
@@ -122,6 +123,7 @@ const PopperArrow = styled("div")(({ theme }) => ({
 }));
 
 const Header = () => {
+  const navigate = useNavigate();
   const [menuOptions, setMenuOptions] = useState([]);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -201,12 +203,13 @@ const Header = () => {
           </G20Container>
         </StyledToolbar>
         <StyledButtonContainer>
-          {LINK_BUTTONS.map(({ name, options }, index) => (
+          {LINK_BUTTONS.map(({ name, options, link }, index) => (
             <Button
               key={index}
-              onClick={(event) =>
-                options?.length && handleMenuOpen(event, options)
-              }
+              onClick={(event) => {
+                options?.length && handleMenuOpen(event, options);
+                link && navigate(link);
+              }}
               sx={{ textTransform: "capitalize", color: "white" }}
             >
               {name}

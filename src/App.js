@@ -6,6 +6,8 @@ import Footer from "./components/footer/Footer";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./themes/Theme";
 import FlashNews from "./components/flash-news/FlashNews";
+import Admission from "./pages/admission/Admission";
+import Registration from "./pages/registration/Registration";
 // import QuickLinks from "./components/quick-links/QuickLinks";
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/admisson" element={<Admission />} />
+            <Route path="/register" element={<Registration />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           <Footer />
